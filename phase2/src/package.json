@@ -1,0 +1,13 @@
+{
+  "name": "breadgetter",
+  "version": "1.0.0",
+  "description": "BreadGetter, pub/sub application",
+  "author": "TJ Chase and Manmeet Singh",
+  "main": "phase2.js",
+  "scripts": {
+    "start": "node phase2.js"
+  },
+  "dependencies": {
+    "express": "^4.16.1"
+  }
+}

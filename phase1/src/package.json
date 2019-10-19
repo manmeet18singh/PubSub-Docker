@@ -1,0 +1,15 @@
+{
+  "name": "breadgetter",
+  "version": "1.0.0",
+  "description": "BreadGetter application on Docker",
+  "author": "TJ Chase and Manmeet Singh",
+  "main": "phase1.js",
+  "scripts": {
+    "start": "node phase1.js"
+  },
+  "dependencies": {
+    "express": "^4.16.1",
+    "fs": "0.0.1-security",
+    "shelljs": "^0.8.2"
+  }
+}

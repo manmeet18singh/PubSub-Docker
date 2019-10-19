@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/phase1/src/bread.png">
+
+    <!-- Local CSS -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <!-- Custom Font -->
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaijaan" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+    <!-- Bootstrap JS plugins -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light" style="opacity: .8; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)">
+        <span class="navbar-brand mb-0" id='title'>BreadGetter Phase 3 - Buffalo</span>
+    </nav>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <!-------------------------------------------------- PUB ----------------------------------------------------------->
+            <div class="col-sm-6">
+                <div class="card" id='pub'>
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Buffalo Publishers</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-title" style="padding-bottom: 6%">Write about Buffalo Sports:</h6>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3" id="BuffaloSports" placeholder="Update Buffalo Sports:"></textarea>
+                        </div>
+                        <a class="btn btn-primary" onclick="publish()" style='margin-left: 85%; color:white'>Publish!</a>
+                    </div>
+                </div>
+            </div>
+            <!-------------------------------------------------- SUB ----------------------------------------------------------->
+            <div class="col-sm-6">
+                <div class="card" id='sub'>
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Subscribers</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <h6>Enter Your Name:</h6>
+                            <input class="form-control" id='name' placeholder="John Doe">
+                        </div>
+                        <h6 class="card-title">Select a topic to Subscribe to:</h6>
+                        <div class="form-group">
+                            <select class="custom-select" id="sub_topic">
+                                <option value="">Choose a topic</option>
+                                <option value="buff-sports">Buffalo Sports</option>
+                                <option value="buff-sports">Houston Sports</option>
+                                <option value="buff-sports">San Fran Sports</option>
+                            </select>
+                        </div>
+                        <a class="btn btn-primary" onclick="subscribe()" style='margin-left: 82%; color:white'>Subscribe!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <textarea class="form-control" rows="10" id="out" readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var subs = {
+            "buff-sports": []
+        };
+
+        var messages = [];
+
+        function publish() {
+            var message = document.getElementById('BuffaloSports').value;
+            
+            // var json= { 'message': message};
+
+            var req = new XMLHttpRequest();
+            req.open('POST', '/writeFile', true);
+            req.setRequestHeader("Content-type", "text/plain");
+            // json = JSON.stringify(json);
+            req.send(message);
+
+            var temp_string = "publishing message " + message + " to Buffalo Sports";
+            messages.unshift(temp_string);
+            notify();
+
+            // for (var i = 0; i < subs[topic].length; i++) {
+            //     temp_string = subs[topic][i] + " received message: " + message;
+            //     console.log(temp_string);
+            //     messages.unshift(temp_string);
+            // }
+            notify();
+        }
+
+        function subscribe() {
+            var name = document.getElementById("name").value;
+            var topic = document.getElementById("sub_topic").value;
+
+            subs[topic].push(name);
+            var temp_string = "new subscriber " + name + " created with topic " + topic;
+            messages.unshift(temp_string);
+            notify();
+        }
+
+        function notify() {
+
+            var out_string = "";
+            for (var i = 0; i < messages.length; i++) {
+                var temp = messages[i];
+                out_string += temp + "\n";
+            }
+            document.getElementById("out").value = out_string;
+        }
+
+    </script>
+
+</body>
+
+</html>

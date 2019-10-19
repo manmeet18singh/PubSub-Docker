@@ -1,0 +1,7 @@
+To Run:
+
+Linux/Mac:
+    Run Docker App First
+    cd to run.sh directory
+    run sh run.sh in terminal
+    go to localhost:8081

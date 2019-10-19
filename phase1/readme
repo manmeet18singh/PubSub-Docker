@@ -1,0 +1,8 @@
+To Run:
+
+Linux/Mac:
+    Run Docker App First
+    cd to phase1.js directory
+    npm install if needed
+    npm start
+    go to localhost:8080
